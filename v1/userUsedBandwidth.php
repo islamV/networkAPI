@@ -79,5 +79,4 @@ if ($current_seession['count'] > 0  || $mac['count'] > 0) {
 }
 
 
-
-// var_dump($used_bandwidth['data']);
+?>

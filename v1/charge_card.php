@@ -120,3 +120,5 @@ function chargeCard($row ,$connect ){
     echo json_encode(array('status' => 'success', 'message' => $card_value. "LE عملية شحن رصيد بواسطة بطاقة شحن بقيمة"));
     http_response_code(200);
 }
+
+?>

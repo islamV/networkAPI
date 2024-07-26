@@ -22,3 +22,5 @@ echo json_encode(array('status' => 'success','data'=> [
     'user_profile_charge_history' => $user_profile_charge_history,
     'users_rad_acct' => $users_rad_acct
     ]));
+
+ ?>

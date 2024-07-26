@@ -17,3 +17,5 @@ if (!function_exists("session_flush")) {
             }
     }
 }
+
+?>

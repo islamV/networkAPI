@@ -104,7 +104,7 @@ if (!function_exists("getDB")) {
     return $result;
   }
 }
-
+?>
 // $users = getPaginateDB("users" , '',2) ;
 
 // while($row = mysqli_fetch_assoc($users['query'])){

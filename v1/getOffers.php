@@ -23,3 +23,5 @@ echo json_encode(["status" => "error", "message" => "data not found."]);
         http_response_code(404);
         exit;
 }
+
+?>

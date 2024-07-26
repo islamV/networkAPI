@@ -6,3 +6,5 @@ return[
     'password'=> 'islamroot1234',
     'database'=> 'radius',
 ] ;
+
+?>

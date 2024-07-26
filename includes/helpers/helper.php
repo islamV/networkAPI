@@ -49,3 +49,5 @@ if (!function_exists('public_')) {
       return 'public';
   }
 }
+
+?>

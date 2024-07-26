@@ -3,3 +3,5 @@
 return [
     'timeout'=> 86400
 ];
+
+?>

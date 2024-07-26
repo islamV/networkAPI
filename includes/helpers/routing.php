@@ -107,3 +107,5 @@ if (!function_exists('segment')) {
         return !empty($segment) ? '/' . $removeQueryParam : '/';
     }
 }
+
+?>
