@@ -5,11 +5,13 @@
     
     RewriteEngine On
      
+    # Redirects trailing slashes to the non-trailing slash version
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ 1% [L,R=301] 
+    RewriteRule ^ %1 [L,R=301]
 
+    # Routes all other requests to public/index.php
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
+    RewriteRule ^ /public/index.php [L]
 </IfModule>
