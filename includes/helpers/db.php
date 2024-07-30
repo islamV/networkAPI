@@ -70,15 +70,24 @@ if (!function_exists("findDB")) {
 
 
 if (!function_exists("firstDB")) {
-  function firstDB($table, string $query_statment): mixed
+  function firstDB($table, string $query_statement): array
   {
-    $q = mysqli_query($GLOBALS['connect'], "SELECT * FROM " . $table ." ". $query_statment);
+    $q = mysqli_query($GLOBALS['connect'], "SELECT * FROM " . $table . " " . $query_statement);
     $GLOBALS['query'] = $q;
+
+    // Check if the query was successful
+    if (!$q) {
+      die("Query failed: " . mysqli_error($GLOBALS['connect']));
+    }
+
     $result = mysqli_fetch_assoc($q);
-    return $result;
+
+    // Free result set
+    mysqli_free_result($q);
+
+    return $result ?: [];  // Return an empty array if no result is found
   }
 }
-
 
 if (!function_exists("getDB")) {
   function getDB($table, string $query_statement, string $select = "*"): array
@@ -105,9 +114,3 @@ if (!function_exists("getDB")) {
   }
 }
 ?>
-// $users = getPaginateDB("users" , '',2) ;
-
-// while($row = mysqli_fetch_assoc($users['query'])){
-//           echo $row['email'] . "<br>" ;
-// }
-// echo $users['render'];

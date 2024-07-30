@@ -8,7 +8,9 @@
 header("Content-Type: application/json");
 
 $GET_ROUTES = isset($routes['GET']) ? $routes['GET'] : [];
+
 $POST_ROUTES = isset($routes['POST']) ? $routes['POST'] : [];
+
 
 function isUserAuthenticated() {
     return null !== session('user_data');

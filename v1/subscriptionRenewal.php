@@ -1,5 +1,5 @@
 <?php
-require './../includes/app.php';
+require('includes/app.php') ;
 header("Content-Type: application/json");
 
 if (isset($_POST["subscription_id"])) {
@@ -25,7 +25,7 @@ if (isset($_POST["subscription_id"])) {
 
     if (is_null($row_1)) {
         echo json_encode(["status" => "error", "message" => "Subscription not found."]);
-        http_response_code(404);
+        http_response_code(200);
         exit;
     }
 
@@ -107,7 +107,7 @@ if (isset($_POST["subscription_id"])) {
         $inst_04 = "INSERT INTO users_notifications (username, text, type, time) VALUES ('$username', '$txt_04', 0, CURRENT_TIMESTAMP)";
         mysqli_query($connect, $inst_04);
 
-        echo json_encode(["status" => "success", "message" => "Subscription updated successfully."]);
+        echo json_encode(["status" => "success", "message" => "ت"]);
     } else {
         echo json_encode(["status" => "error", "message" => "Insufficient balance."]);
         http_response_code(400);

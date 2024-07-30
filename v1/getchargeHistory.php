@@ -1,5 +1,5 @@
 <?php
-require './../includes/app.php';
+require('includes/app.php') ;
 header("Content-Type: application/json");
 $user  = session('user_data');
 

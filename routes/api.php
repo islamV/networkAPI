@@ -10,6 +10,8 @@ if (session('user_data')) {
     route_get('user/getchargeHistory' , 'getchargeHistory');
     route_get('user/getOffers' , 'getOffers');
     route_post('user/subscriptionRenewal' , 'subscriptionRenewal');
+    
+
 }
 
 ?>

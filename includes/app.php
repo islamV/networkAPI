@@ -1,17 +1,13 @@
 <?php
 
+session_start();
+
 $helpers =  ["helper" , "db" ,"sessions_helper" ,'routing'];
 foreach($helpers  as $helper){
     require  __DIR__ ."/helpers/".$helper.".php" ; 
 }
 
-$connect = mysqli_connect(
-    config('database.servername'),
-    config('database.username'),
-    config('database.password'),
-    config('database.database'),
-    config('database.port'),
-);
+$connect = mysqli_connect("localhost", "root", "islamroot1234", "radius");
  
 $query= "" ;
 if(!$connect){
@@ -23,4 +19,6 @@ require_once base_path('includes/exception_error');
 
 
 route_init();
+
+
 ?>

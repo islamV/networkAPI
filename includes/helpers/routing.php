@@ -102,9 +102,23 @@ if (!function_exists('url')) {
 if (!function_exists('segment')) {
     function segment()
     {
+        // Get the request URI and remove the leading slash
         $segment = ltrim($_SERVER['REQUEST_URI'], '/');
+        
+        // Remove any query parameters
         $removeQueryParam = explode('?', $segment)[0];
-        return !empty($segment) ? '/' . $removeQueryParam : '/';
+        
+        // Find the position of 'api/' and get everything after it
+        $apiSegmentPosition = strpos($removeQueryParam, 'api/index.php/');
+        
+        // If 'api/' is found, extract everything after it
+        if ($apiSegmentPosition !== false) {
+            $pathAfterApi = substr($removeQueryParam, $apiSegmentPosition + strlen('api/index.php/'));
+            return '/' . ltrim($pathAfterApi, '/');
+        }
+        
+        // If 'api/' is not found, return an empty string or any default value
+        return '/';
     }
 }
 

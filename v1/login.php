@@ -1,8 +1,7 @@
 <?php
-// Start session
-// session_start();
 
-require './../includes/app.php' ;
+
+require('includes/app.php');
 header("Content-Type: application/json");
 
 // Check if POST request contains 'username'
@@ -28,8 +27,14 @@ if (isset($_POST["username"])) {
     if ($row) {
         // Check for correct credentials
         if ($user == $row['pin'] || $user == $row['mobile']) {
-            session('user_data'  , $row);
-            echo json_encode(["status" => "success", "message" => "login succesfully."  ]);
+            $stmt = $connect->prepare("SELECT * FROM networks_profiles WHERE id = ?");
+            $stmt->bind_param("s", $srv_id);
+            $stmt->execute();
+            $row_1 = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            $row['networks_profiles'] = $row_1;
+            session('user_data', $row);
+            echo json_encode(["status" => "success", "message" => "login succesfully.", 'session_id' => session_id(), 'session_time' => ini_get('session.gc_maxlifetime')]);
             http_response_code(200);
         } else {
             echo json_encode(["status" => "error", "message" => "Invalid credentials."]);
@@ -43,4 +48,3 @@ if (isset($_POST["username"])) {
     echo json_encode(["status" => "error", "message" => "Username not provided."]);
     http_response_code(400);
 }
-?>

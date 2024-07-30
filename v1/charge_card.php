@@ -1,24 +1,22 @@
 <?php
-require './../includes/app.php' ;
+require('includes/app.php') ;
+
 header("Content-Type: application/json");
 
-// Check if the 'card' parameter is set
 $price = 0;
 if (isset( $_POST["card"])) {
     $card_id =  $_POST["card"];
+
     $card_id = mysqli_real_escape_string($connect, $card_id);
     $query = "SELECT * FROM recharge_cards WHERE card_num = '$card_id' AND card_status = 0";
     $result = mysqli_query($connect, $query);
     if ($result) {
         $row = mysqli_fetch_assoc($result);
         if ($row) {
-        
-            chargeCard($row , $connect);
-
-
+            chargeCard($row , $connect ,$card_id);
         } else {
             echo json_encode(array('status' => 'error', 'message' => "كرت الشحن غير موجود او مشحون من قبل ($card_id)"));
-            http_response_code(404);
+            http_response_code(200);
         }
     } else {
         echo json_encode(array('status' => 'error', 'message' => 'Database query failed.'));
@@ -27,21 +25,19 @@ if (isset( $_POST["card"])) {
 }
 
 
-function chargeCard($row ,$connect ){
-    $card_id =  $_POST["card"];
-    $card_id = mysqli_real_escape_string($connect, $card_id);
+function chargeCard($row ,$connect  , $card_id ){
+  
+ 
 
         // Prepare SQL statement
         $user_data = session('user_data');
+        $user = firstDB('users' ,'WHERE username='.$user_data['username']);
 
-        $user_data = firstDB('users' ,'WHERE username='.$user_data['username']);
-        $user_data =  $user_data['data'];
-    // $user_data =  $user_data['data'];
     $card_value = $row['card_value'];
-    $post_credit =  $user_data['credit'] * 1;
-    $post_balance =  $user_data['balance'] * 1;
-    $admin = $user_data['created_by'];
-   $id  = $user_data['username'];
+    $post_credit =  $user['credit'] ;
+    $post_balance =  $user['balance'] ;
+    $admin = $user['created_by'];
+   $id  = $user['username'];
     $act_time = date("Y-m-d H:i:s");
 
     updateDB('recharge_cards', [
@@ -60,17 +56,12 @@ function chargeCard($row ,$connect ){
         ], " WHERE username = '$id'");
     }
 
-    if ($post_credit > 0) {
-
-        if ($post_credit >= $card_value) {
-
+    if ($post_credit > 0 && $post_credit >= $card_value) {
             $prep_val = $post_credit - $card_value;
-
-
+    
             updateDB('users', [
                 'credit' => $prep_val
             ], " WHERE username = '$id'");
-        }
     }
 
     if ($card_value > $post_credit) {
